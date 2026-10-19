@@ -1,0 +1,22 @@
+const fs = require('fs');
+const path = require('path');
+const winston = require('winston');
+
+const logDirectory = path.resolve(__dirname, '../../logs');
+fs.mkdirSync(logDirectory, { recursive: true });
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
+  transports: [
+    new winston.transports.File({
+      filename: path.join(logDirectory, 'loi.log'),
+      level: 'error',
+    }),
+    new winston.transports.Console({
+      format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
+    }),
+  ],
+});
+
+module.exports = logger;
