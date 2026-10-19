@@ -77,6 +77,9 @@
 - [ ] Đăng nhập thường qua Postman trả về đúng 2 token
 - [ ] Đăng nhập Google chuyển hướng và tạo được `TaiKhoan` mới (kiểm tra
       trong DB thấy `NhaCungCapOAuth = 'google'` và `MaNguoiDungOAuth` có giá trị)
+- [ ] Sau khi đăng nhập Google, `TaiKhoan.TenDangNhap` và `TaiKhoan.Email`
+      khớp email Google (không còn NULL); đăng nhập lần 2 sau khi đổi tên/
+      email trên Google thì 2 cột này được đồng bộ lại
 - [ ] `pnpm test` chạy xanh cả 3 test
 
 **Xác nhận đủ 5 tiêu chí trên rồi báo lại — tôi mới viết tiếp Giai đoạn 2

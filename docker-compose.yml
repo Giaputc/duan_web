@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: hrms-sql
+    environment:
+      - ACCEPT_EULA=Y
+      # Sử dụng MSSQL_SA_PASSWORD thay vì SA_PASSWORD để tránh lỗi deprecated
+      - MSSQL_SA_PASSWORD=Hrms@2026!
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      # Mount thư mục chứa schema vào container để dễ dàng chạy script
+      - ./backend/db:/tmp/db
+      # (Tuỳ chọn) Mount volume để giữ lại data khi xoá container
+      # - mssql-data:/var/opt/mssql
+    healthcheck:
+      # Kiểm tra xem SQL Server đã sẵn sàng nhận kết nối chưa
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Hrms@2026!' -C -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+# volumes:
+#   mssql-data:
